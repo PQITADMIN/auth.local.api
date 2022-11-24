@@ -1,0 +1,36 @@
+name: CodeCoverage
+
+on:
+ workflow_dispatch:         # Controls when the action will run. Workflow runs manually triggered using the UI
+ push:                      # After push or merge in qa branch action will run. 
+   branches:
+     - '*'
+
+env:
+  AccessSecretToken: pharmaquantSecretToken
+  AuthUiDomain: pharmaquantSecretToken
+  MYSQLHost: 34.192.237.217:3306
+  MYSQLPassword: PharmaQuant@123
+  REDISHost: 34.192.237.217:6379
+  REDISPassword: PQpassword123
+  SMTPEmail: helpdesk@pharmaquant.org
+  SMTPPassword: Test@123
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.19'
+      
+      - name: Run coverage
+        run:  go test ./test/ -race -coverpkg=./... -coverprofile=coverage.out
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
