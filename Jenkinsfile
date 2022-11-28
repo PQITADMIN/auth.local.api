@@ -1,6 +1,6 @@
 pipeline{
 
-	agent {label 'docker-test'}
+	agent {label 'auth.valuestory-dev'}
 
 	environment {
 	containerName = 'auth.valuestory.api.dev'
@@ -25,7 +25,7 @@ pipeline{
 		}
 		stage('Deploy') {
 			steps {
-				sh 'docker run -p 8081:8080 -d --name $containerName $imageName'
+				sh 'docker run -e REDISHost=$REDISHost -e REDISPassword=$REDISPassword -e MYSQLHost=$MYSQLHost -e MYSQLPassword=$MYSQLPassword -e AccessSecretToken=$AccessSecretToken -e AuthUIDomain=$AuthUIDomain  -p 8080:8080 -d --name $containerName $imageName'
 			}
 		}
 
