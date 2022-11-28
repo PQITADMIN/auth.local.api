@@ -4,7 +4,7 @@ pipeline{
 
 	environment {
 	containerName = 'auth.valuestory.api.dev'
-        imageName    = 'auth.valuestory.api'
+        imageName    = 'auth.valuestory.api.dev:${BUILD_NUMBER}'
 	}
 	stages {
 
