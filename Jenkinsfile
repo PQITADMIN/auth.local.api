@@ -3,8 +3,8 @@ pipeline{
 	agent {label 'auth.valuestory-dev'}
 
 	environment {
-	containerName = 'auth.valuestory.api.dev'
-        imageName    = 'auth.valuestory.api.dev:${BUILD_NUMBER}'
+	containerName = 'auth.valuestory.api'
+        imageName    = 'auth.valuestory.api.dev'
 	}
 	stages {
 
